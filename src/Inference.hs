@@ -25,3 +25,12 @@ runInfer :: Infer (Subst, Type) -> Either TypeError Scheme
 runInfer m = case evalState (runExceptT m) initUnique of
     Left err -> Left err
     Right res -> Right $ closeOver res
+
+letters :: [String]
+letters = [1..] >>= flip replicateM ['a'..'z']
+
+fresh :: Infer Type
+fresh = do
+  s <- get
+  put s{count = count s + 1}
+  return $ TVar $ TV (letters !! count s)
