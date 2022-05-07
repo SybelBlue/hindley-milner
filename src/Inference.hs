@@ -145,7 +145,7 @@ infer env ex = case ex of
         (lsub, ltype) <- infer env l
         (rsub, rtype) <- infer env r
         rettype <- fresh
-        retsub <- unify (TArr ltype (TArr rtype rettype)) (ops op)
+        retsub <- unify (ltype `TArr` rtype `TArr` rettype) (ops op)
         return (lsub `compose` rsub `compose` retsub, apply retsub rettype)
     
     Lit (LInt _)  -> return (nullSubst, typeInt)
