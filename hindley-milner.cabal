@@ -27,6 +27,7 @@ library
   exposed-modules:
       Lib
       Syntax
+      Types
   other-modules:
       Paths_hindley_milner
   hs-source-dirs:
