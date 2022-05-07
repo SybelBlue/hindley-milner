@@ -8,6 +8,7 @@ import Types
 
 import Control.Monad.Except
 import Control.Monad.State
+import qualified Data.Set as Set
 
 data TypeError 
     = UnificationFail Type Type
@@ -55,3 +56,13 @@ bind :: TVar -> Type -> Infer Subst
 bind a t | t == TVar a      = return nullSubst
          | occursCheck a t  = throwError $ InfiniteType a t
          | otherwise        = return $ Map.singleton a t
+
+instantiate :: Scheme -> Infer Type
+instantiate (Forall as t) = do
+    as' <- mapM (const fresh) as
+    let s = Map.fromList $ zip as as'
+    return $ apply s t
+
+generalize :: TypeEnv -> Type -> Scheme
+generalize env t = Forall as t
+    where as = Set.toList $ ftv t `Set.difference` ftv env
