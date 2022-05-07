@@ -19,7 +19,7 @@ typeBool = TCon "Bool"
 data Scheme = Forall [TVar] Type deriving Show
 
 ops :: Binop -> Type
-ops Add = typeInt `TArr` typeInt `TArr` typeInt
-ops Mul = typeInt `TArr` typeInt `TArr` typeInt
-ops Sub = typeInt `TArr` typeInt `TArr` typeInt
-ops Eql = typeInt `TArr` typeInt `TArr` typeBool
+ops Add = typeInt `TArr` (typeInt `TArr` typeInt)
+ops Mul = typeInt `TArr` (typeInt `TArr` typeInt)
+ops Sub = typeInt `TArr` (typeInt `TArr` typeInt)
+ops Eql = typeInt `TArr` (typeInt `TArr` typeBool)
