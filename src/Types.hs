@@ -19,5 +19,3 @@ typeInt = TCon "Int"
 typeBool = TCon "Bool"
 
 data Scheme = Forall [TVar] Type
-
-newtype TypeEnv = TypeEnv (Map.Map Var Scheme)
