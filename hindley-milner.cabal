@@ -28,6 +28,7 @@ library
       Context
       Inference
       Lib
+      Substitution
       Syntax
       Types
   other-modules:
