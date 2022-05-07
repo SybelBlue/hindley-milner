@@ -10,6 +10,7 @@ data Expr
   | Let Name Expr Expr
   | Lit Lit
   | If Expr Expr Expr
+  -- | fixpoint operator for expanding self-recursive expr
   | Fix Expr
   | Op Binop Expr Expr
   deriving (Show, Eq, Ord)
