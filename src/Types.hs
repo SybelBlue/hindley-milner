@@ -16,7 +16,7 @@ typeInt, typeBool :: Type
 typeInt = TCon "Int"
 typeBool = TCon "Bool"
 
-data Scheme = Forall [TVar] Type
+data Scheme = Forall [TVar] Type deriving Show
 
 ops :: Binop -> Type
 ops Add = typeInt `TArr` typeInt `TArr` typeInt

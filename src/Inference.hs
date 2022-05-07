@@ -16,6 +16,7 @@ data TypeError
     = UnificationFail Type Type
     | InfiniteType TVar Type
     | UnboundVariable String
+    deriving Show
 
 newtype Unique = Unique { count :: Int }
 
