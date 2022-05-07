@@ -41,3 +41,7 @@ instance Substitutable a => Substitutable [a] where
 instance Substitutable TypeEnv where
     apply s (TypeEnv env) = TypeEnv $ Map.map (apply s) env
     ftv (TypeEnv env) = ftv $ Map.elems env
+
+
+occursCheck :: Substitutable a => TVar -> a -> Bool
+occursCheck a = Set.member a . ftv
