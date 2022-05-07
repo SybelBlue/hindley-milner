@@ -37,6 +37,7 @@ library
   build-depends:
       base >=4.7 && <5
     , containers
+    , transformers
   default-language: Haskell2010
 
 executable hindley-milner-exe
@@ -50,6 +51,7 @@ executable hindley-milner-exe
       base >=4.7 && <5
     , containers
     , hindley-milner
+    , transformers
   default-language: Haskell2010
 
 test-suite hindley-milner-test
@@ -64,4 +66,5 @@ test-suite hindley-milner-test
       base >=4.7 && <5
     , containers
     , hindley-milner
+    , transformers
   default-language: Haskell2010
