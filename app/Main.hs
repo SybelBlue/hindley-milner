@@ -4,13 +4,23 @@ import Syntax
 import Lib (inferFresh)
 import Data.Map.Strict ((!))
 import Context
-import Control.Arrow
 
-decls = 
-    [ ("addTwo", Lam "x" $ Op Add (Lit (LInt 2)) (Var "x"))
-    , ("id", Lam "x" $ Var "x")
-    , ("addTwo2", Let "y" (Lit $ LInt 2) $ Lam "x" $ Op Add (Lit (LInt 2)) (Var "x"))
-    , ("fib", Fix $ Lam "fib" $ Lam "n" $ Op Add (App (Var "fib") $  Op Sub (Var "n") $ Lit $ LInt 1) (App (Var "fib") $ Op Sub (Var "n") $ Lit $ LInt 2))
+instance Num Expr where
+    (+) = Op Add
+    (*) = Op Mul
+    (-) = Op Sub
+    abs e = If (Op Les e 0) (-e) e
+    fromInteger = Lit . LInt
+    signum e = If (Op Les e 0) (-1) $ If (Op Eql e 0) e 1
+
+(\>) ps body = foldr Lam body ps
+infixr 0 \>
+
+decls =
+    [ ("addTwo", ["x"] \> 2 + Var "x")
+    , ("id", ["x"] \> Var "x")
+    , ("addTwo2", Let "y" 2 $ ["x"] \> Var "x" + Var "y")
+    , ("fib", Fix $ ["fib", "n"] \> App (Var "fib") (Var "n" - 1) + App (Var "fib") (Var "n" - 2))
     ]
 
 main :: IO ()
