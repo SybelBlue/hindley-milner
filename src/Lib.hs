@@ -3,7 +3,9 @@ module Lib
     ) where
 import Inference
 import Syntax
-import Context (emptyTyenv)
+import qualified Context
 
 inferTest :: IO ()
-inferTest = print $ runInfer (infer emptyTyenv (Op Add (Lit $ LInt 3) (Lit (LInt 3))))
+inferTest = print $ inferTop Context.empty
+    [ 
+    ]

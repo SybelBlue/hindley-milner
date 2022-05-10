@@ -1,7 +1,6 @@
 module Syntax where
 
 type Name = String
-type Var = String
 
 data Expr
   = Var Name
