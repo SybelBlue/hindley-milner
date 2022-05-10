@@ -19,7 +19,7 @@ data Lit
   | LBool Bool
   deriving (Show, Eq, Ord)
 
-data Binop = Add | Sub | Mul | Eql
+data Binop = Add | Sub | Mul | Eql | Les
   deriving (Eq, Ord, Show)
 
 data Program = Program [Decl] Expr deriving Eq
