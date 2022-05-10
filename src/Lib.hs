@@ -1,11 +1,9 @@
 module Lib
-    ( inferTest
+    ( inferFresh
     ) where
 import Inference
 import Syntax
 import qualified Context
 
-inferTest :: IO ()
-inferTest = print $ inferTop Context.empty
-    [ 
-    ]
+inferFresh :: [Decl] -> Either TypeError Context.Env
+inferFresh = inferTop Context.empty
