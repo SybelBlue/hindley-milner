@@ -1,4 +1,6 @@
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE TupleSections #-}
 module Inference (
   Constraint,
   TypeError(..),
@@ -28,10 +30,10 @@ import Substitution
 -- | Inference monad
 type Infer a = (ReaderT
                   Env             -- Typing environment
-                  (StateT         -- Inference state
-                  InferState
-                  (Except         -- Inference errors
-                    TypeError))
+                  (StateT         -- An Errable Inference state
+                    InferState
+                    (Except       -- Inference errors
+                      TypeError))
                   a)              -- Result
 
 -- | Inference state
@@ -124,7 +126,7 @@ generalize env t  = Forall as t
     where as = Set.toList $ ftv t `Set.difference` ftv env
 
 infer :: Expr -> Infer (Type, [Constraint])
-infer expr = case expr of
+infer = \case
   Lit (LInt _)  -> return (typeInt, [])
   Lit (LBool _) -> return (typeBool, [])
 
@@ -200,8 +202,7 @@ normalize (Forall _ body) = Forall (map snd ord) (normtype body)
 
 -- | Run the constraint solver
 runSolve :: [Constraint] -> Either TypeError Subst
-runSolve cs = runIdentity $ runExceptT $ solver st
-  where st = (emptySubst, cs)
+runSolve = runIdentity . runExceptT . solver . (emptySubst,)
 
 unifyMany :: [Type] -> [Type] -> Solve Subst
 unifyMany [] [] = return emptySubst
